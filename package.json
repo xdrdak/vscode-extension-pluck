@@ -1,0 +1,60 @@
+{
+  "name": "vscode-plugin-pluck",
+  "displayName": "Pluck",
+  "description": "Copy file path with selected lines for easy sharing in coding tools",
+  "version": "0.0.1",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:pluck.copyFullPathWithLines",
+    "onCommand:pluck.copyRelativePathWithLines"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "pluck.copyFullPathWithLines",
+        "title": "Pluck: Copy Full Path with Selected Lines"
+      },
+      {
+        "command": "pluck.copyRelativePathWithLines", 
+        "title": "Pluck: Copy Relative Path with Selected Lines"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "pluck.copyFullPathWithLines",
+          "group": "clipboard"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "pluck.copyRelativePathWithLines",
+          "group": "clipboard"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "npx vsce package"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xavierdrdak/vscode-plugin-pluck"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "typescript": "^4.9.4",
+    "@vscode/vsce": "^2.15.0"
+  }
+}
