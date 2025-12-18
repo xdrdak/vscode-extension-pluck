@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { OUTPUT_FORMATS } from './output-formats';
 
 export function activate(context: vscode.ExtensionContext) {
     const copyFullPathWithLines = vscode.commands.registerCommand('pluck.copyFullPathWithLines', () => {
@@ -19,8 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
         const endLine = selection.end.line + 1;
         const selectedText = editor.document.getText(selection);
 
-        const lineRange = startLine === endLine ? `${startLine}` : `${startLine}-${endLine}`;
-        const output = `${filePath}:${lineRange}\n\`\`\`\n${selectedText}\n\`\`\``;
+        const output = OUTPUT_FORMATS.fullPathWithLines(filePath, startLine, endLine);
 
         vscode.env.clipboard.writeText(output).then(() => {
             vscode.window.showInformationMessage('Full path with selected lines copied to clipboard');
@@ -54,8 +54,7 @@ export function activate(context: vscode.ExtensionContext) {
         const endLine = selection.end.line + 1;
         const selectedText = editor.document.getText(selection);
 
-        const lineRange = startLine === endLine ? `${startLine}` : `${startLine}-${endLine}`;
-        const output = `${relativePath}:${lineRange}\n\`\`\`\n${selectedText}\n\`\`\``;
+        const output = OUTPUT_FORMATS.relativePathWithLines(relativePath, startLine, endLine);
 
         vscode.env.clipboard.writeText(output).then(() => {
             vscode.window.showInformationMessage('Relative path with selected lines copied to clipboard');
